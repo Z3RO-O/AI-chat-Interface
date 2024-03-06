@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google"
-import Navigation from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 import { cn } from "@/lib/utils"
 import Sidebar from "@/components/Sidebar";
+import ChatUI from "@/components/ChatUI";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,13 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(
-        "flex font-sans bg-neutral-100",
+        "flex font-sans bg-neutral-100 h-screen w-screen overflow-hidden border-box",
         fontSans.variable
       )}>
-        <Navigation />
-        {/* <main className="flex flex-col items-center justify-center"> */}
-        {children}
-        {/* </main> */}
+        <main className="w-full h-full">
+          {children}
+        </main>
       </body>
     </html>
   );

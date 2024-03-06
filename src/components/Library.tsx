@@ -179,7 +179,7 @@ export default function Library() {
     })
 
     return (
-        <Card className="absolute mx-10 my-6 ">
+        <Card className="mx-10 my-6 grow ">
             <div className="flex items-center justify-between">
                 <p className="p-8 text-lg font-semibold">Library</p>
                 <div className="flex relative justify-end py-4">
@@ -206,7 +206,7 @@ export default function Library() {
                             }
                             className="max-w-sm pl-12 pr-4 bg-neutral-100"
                         />
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 pr-8">
                             <Button variant="outline">Filter</Button>
                             <Button>Upload</Button>
                         </div>
@@ -239,7 +239,7 @@ export default function Library() {
                     </DropdownMenuContent>
                 </DropdownMenu> */}
             </div>
-            <div className="rounded-md border-b">
+            <div className="rounded-md border-b p-8">
                 <Table>
                     <TableHeader className="text-xs">
                         {table.getHeaderGroups().map((headerGroup) => (

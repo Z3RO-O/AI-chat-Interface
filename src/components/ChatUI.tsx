@@ -49,46 +49,49 @@ const ChatUI: React.FC = () => {
     };
 
     return (
-        <div className="flex gap-4 px-10 py-4 bg-gray-100">
-            <Sidebar />
-            <div className="flex flex-col px-24 py-8  bg-white rounded-lg shadow-md ">
-                <div className="flex flex-col grow">
-                    <div className="p-4">
-                        {messages.map((message, index) => (
-                            <div key={index} className="mb-4">
-                                {message.isUser ? (
-                                    <>
-                                        <div className='flex gap-4 items-center'>
-                                            <Circle className='size-5 fill-gray-200 text-gray-200' />
-                                            <h2 className="text-gray-400">You</h2>
-                                        </div>
-                                        <div className="rounded-lg pl-10">
-                                            <ReactMarkdown>{message.text}</ReactMarkdown>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className='flex gap-4 items-center'>
-                                            <Circle className='size-5 fill-gray-200 text-gray-200' />
-                                            <h2 className="text-gray-400">Echo AI</h2>
-                                        </div>
-                                        <div className="rounded-lg pl-10">
-                                            <ReactMarkdown>{message.text}</ReactMarkdown>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        ))}
+        <div className=" w-full grow items-center justify-center bg-gray-100 my-6 mx-10">
+            <div className='flex h-full gap-4'>
+                {/* <div className='bg-white grow'>Hello</div> */}
+                <Sidebar />
+                <div className="flex flex-col grow px-24 py-8 bg-white rounded-lg">
+                    <div className="flex grow overflow-auto scrollbar-hide ">
+                        <div className="p-4 ">
+                            {messages.map((message, index) => (
+                                <div key={index} className="mb-4">
+                                    {message.isUser ? (
+                                        <>
+                                            <div className='flex gap-4 items-center'>
+                                                <Circle className='size-5 fill-gray-200 text-gray-200' />
+                                                <h2 className="text-gray-400">You</h2>
+                                            </div>
+                                            <div className="rounded-lg pl-10">
+                                                <ReactMarkdown>{message.text}</ReactMarkdown>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className='flex gap-4 items-center'>
+                                                <Circle className='size-5 fill-gray-200 text-gray-200' />
+                                                <h2 className="text-gray-400">Echo AI</h2>
+                                            </div>
+                                            <div className="rounded-lg pl-10">
+                                                <ReactMarkdown>{message.text}</ReactMarkdown>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                    <Input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress} // Call handleKeyPress on key press
+                        placeholder="Message Echo"
+                        className="rounded-md"
+                    />
                 </div>
-                <Input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress} // Call handleKeyPress on key press
-                    placeholder="Message Echo"
-                    className="rounded-md"
-                />
             </div>
         </div>
     );

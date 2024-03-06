@@ -9,7 +9,7 @@ import { converstions } from "@/data"
 
 const Sidebar = () => {
     return (
-        <Card className="min-w-[350px] max-w-[350px] border-r bg-white shadow-md">
+        <Card className=" max-w-[350px] border-r bg-white">
             <div className="p-4"><WorkspaceSelector /></div>
             <Separator />
             <div className="flex-grow p-4">
