@@ -1,4 +1,4 @@
-export const frameworks = [
+export const workspace = [
     {
         value: "Revenue Growth Management",
         label: "Revenue Growth Management",
@@ -6,24 +6,63 @@ export const frameworks = [
     },
 ]
 
+export const tableData = [
+    {
+        id: "1",
+        name : "RGM Interview",
+        project:"REVUP",
+        role:"RGM",
+        date:"Dec 12, 2021",
+        strength:"Strong",
+        location:"Australia",
+    },
+    {
+        id: "2",
+        name : "RGM Interview",
+        project:"REVUP",
+        role:"RGM",
+        date:"Dec 12, 2021",
+        strength:"Very Strong",
+        location:"Australia",
+    },
+    {
+        id: "3",
+        name : "RGM Interview",
+        project:"REVUP",
+        role:"RGM",
+        date:"Dec 12, 2021",
+        strength:"Weak",
+        location:"Australia",
+    },
+    {
+        id: "4",
+        name : "RGM Interview",
+        project:"REVUP",
+        role:"RGM",
+        date:"Dec 12, 2021",
+        strength:"Very weak",
+        location:"Australia",
+    },
+]
+
 export const converstions = [
     {
-        time: "TODAY",
+        time: "Today",
         initials: "RG",
         value:"How does promotional calendar look like for next quarter?",
     },
     {
-        time: "TODAY",
+        time: "Today",
         initials: "RG",
         value:"What is something I need to know about the new product launch?",
     },
     {
-        time: "YESTERDAY",
+        time: "Yesterday",
         initials: "RG",
         value:"What are the challenges that the team is facing?",
     },
     {
-        time: "YESTERDAY",
+        time: "Yesterday",
         initials: "AU",
         value:"What is the most crucial step we need to take to improve the sales?",
     },

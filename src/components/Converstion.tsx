@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
+import { Separator } from '@/components/ui/separator';
 
 interface Conversation {
     time: string;
@@ -12,6 +13,12 @@ interface Props {
 }
 
 const Converstion: React.FC<Props> = ({ conversations }) => {
+    const [selectedConversation, setSelectedConversation] = useState<number | null>(null);
+
+    const handleClick = (index: number) => {
+        setSelectedConversation(index === selectedConversation ? null : index);
+    };
+
     return (
         <div className="flex flex-col">
             <div className="relative w-full">
@@ -29,15 +36,22 @@ const Converstion: React.FC<Props> = ({ conversations }) => {
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                 </svg>
-                <Input type="text" placeholder="Search conversations" className="pl-12 pr-4 bg-sky-50" />
+                <Input type="text" placeholder="Search conversations" className="pl-12 pr-4 bg-neutral-100" />
             </div>
-            <div className="overflow-y-auto h-64 scrollbar-hide">
+            <div className="overflow-hidden h-screen scrollbar-hide">
                 {conversations.map((conversation, index) => (
-                    <div key={index} className="mb-4 mt-4">
+                    <div
+                        key={index}
+                        className={`mb-4 mt-4`}
+                        onClick={() => handleClick(index)}
+                    >
                         {index === 0 || conversation.time !== conversations[index - 1].time ? (
-                            <h3 className="text-gray-500 text-sm mb-6">{conversation.time}</h3>
+                            <div className="flex ">
+                                <h3 className="text-gray-500 text-sm mb-6">{conversation.time}</h3>
+                                <Separator className='mt-3 ml-2' />
+                            </div>
                         ) : null}
-                        <div className="flex items-center cursor-pointer">
+                        <div className={`flex items-center p-2 rounded cursor-pointer ${selectedConversation === index ? 'bg-neutral-50' : ''}`}>
                             <div className="bg-gray-100 p-1 font-semibold text-gray-400 rounded mr-2">
                                 {conversation.initials}
                             </div>

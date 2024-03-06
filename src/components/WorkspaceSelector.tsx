@@ -1,77 +1,32 @@
-"use client"
-
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from "@/components/ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { frameworks } from "@/data"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { workspace } from "@/data"
 
 export default function WorkspaceSelector() {
-    const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState("Revenue Growth Management") // Setting default value 
+    const [value, setValue] = React.useState("Revenue Growth Management") // Set default value
 
     return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <div className="initials flex flex-row rounded outline outline-offset-4 outline-1 outline-slate-200 items-center p-2">
-                <p className="bg-gray-100 p-2 font-semibold text-neutral-500 rounded">RG</p>
-                <div className="justify-center items-center">
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            role="combobox"
-                            aria-expanded={open}
-                            className="justify-between text-md text-ellipsis font-bold "
-                        >
-                            <div className="flex flex-col">
-                                {value
-                                    ? frameworks.find((framework) => framework.value === value)?.label
-                                    : "Select framework..."}
-                                <p className="text-xs text-neutral-500 text-left font-light">{value ? frameworks.find((framework) => framework.value === value)?.lastUpdate : ''}</p>
-                            </div>
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-100" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-full p-0">
-                        <Command>
-                            <CommandInput placeholder="Search framework..." />
-                            <CommandEmpty>No framework found.</CommandEmpty>
-                            <CommandGroup>
-                                {frameworks.map((framework) => (
-                                    <CommandItem
-                                        key={framework.value}
-                                        value={framework.value}
-                                        onSelect={(currentValue) => {
-                                            setValue(currentValue === value ? "" : currentValue)
-                                            setOpen(false)
-                                        }}
-                                    >
-                                        <Check
-                                            className={cn(
-                                                "mr-2 h-4 w-4",
-                                                value === framework.value ? "opacity-100" : "opacity-0"
-                                            )}
-                                        />
-                                        {framework.label}
-                                    </CommandItem>
+        <div className="initials flex flex-row rounded items-center p-2">
+            <p className="bg-gray-100 p-2 font-semibold text-neutral-500 rounded">RG</p>
+            <div className="justify-center items-center">
+                <div className="flex  w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                        <Select>
+                            <SelectTrigger id="workspace" className="cursor-pointer">
+                                <SelectValue>{value}</SelectValue>
+                            </SelectTrigger>
+                            <SelectContent position="popper">
+                                {workspace.map((item, index) => (
+                                    <SelectItem key={index} value={item.value} onClick={() => setValue(item.value)}>
+                                        {item.label}
+                                    </SelectItem>
                                 ))}
-                            </CommandGroup>
-                        </Command>
-                    </PopoverContent>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <svg data-c8r="true" data-qa="compose" aria-hidden="true" viewBox="0 0 20 20" className="size-6 text-neutral-400 cursor-pointer"><path fill="currentColor" fill-rule="evenodd" d="M16.707 3.268a1 1 0 0 0-1.414 0l-.482.482 1.439 1.44.482-.483a1 1 0 0 0 0-1.414zM15.19 6.25l-1.44-1.44-5.068 5.069-.431 1.872 1.87-.432zm-.957-4.043a2.5 2.5 0 0 1 3.536 0l.025.025a2.5 2.5 0 0 1 0 3.536l-6.763 6.763a.75.75 0 0 1-.361.2l-3.25.75a.75.75 0 0 1-.9-.9l.75-3.25a.75.75 0 0 1 .2-.361zM5.25 4A2.25 2.25 0 0 0 3 6.25v8.5A2.25 2.25 0 0 0 5.25 17h8.5A2.25 2.25 0 0 0 16 14.75v-4.5a.75.75 0 0 1 1.5 0v4.5a3.75 3.75 0 0 1-3.75 3.75h-8.5a3.75 3.75 0 0 1-3.75-3.75v-8.5A3.75 3.75 0 0 1 5.25 2.5h4.5a.75.75 0 0 1 0 1.5z" clip-rule="evenodd"></path></svg>
                 </div>
-            </div >
-        </Popover>
+            </div>
+        </div>
     )
 }

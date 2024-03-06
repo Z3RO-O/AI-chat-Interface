@@ -1,5 +1,4 @@
-'use client'
-import ChatUI from "@/components/ChatUI"
+import Library from "@/components/Library"
 import Sidebar from "@/components/Sidebar"
 // import { Combobox } from "@/components/WorkspaceSelector"
 import { Input } from "@/components/ui/input"
@@ -8,7 +7,9 @@ import { Input } from "@/components/ui/input"
 const chat = () => {
     return (
         <div>
-            <ChatUI />
+            {/* <Combobox />*/}
+            <Library />
+            {/* <Input type="text" placeholder="Message Echo" /> */}
         </div>
     )
 }

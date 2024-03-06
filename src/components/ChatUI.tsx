@@ -1,46 +1,94 @@
 import { useState } from 'react';
-// import { ChatIcon } from '@heroicons/react/outline';
+import ReactMarkdown from 'react-markdown';
+import { Input } from "@/components/ui/input";
+import Sidebar from './Sidebar';
+import { Circle } from 'lucide-react';
 
-const ChatUI = () => {
-    const [messages, setMessages] = useState([
-        { text: 'Hello, how can I assist you today?', isUser: false }
+type Message = {
+    text: string;
+    isUser: boolean;
+    label: string;
+};
+
+const ChatUI: React.FC = () => {
+    const [messages, setMessages] = useState<Message[]>([
+        { text: 'Hello, how can I assist you today?', isUser: false, label: 'Echo AI' }
     ]);
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState<string>('');
 
-    const handleSendMessage = () => {
-        if (!inputValue) return;
-        setMessages([...messages, { text: inputValue, isUser: true }]);
+    const handleSendMessage = async () => {
+        if (!inputValue.trim()) return; // Do not send empty messages
+
+        // Add the user message to the messages state with a label
+        setMessages([...messages, { text: inputValue, isUser: true, label: 'You' }]);
+
+        try {
+            // Fetch the response from the markdown file
+            const response = await fetch('../response.md'); // Assuming response.md is in the public directory
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch AI response');
+            }
+
+            const markdown = await response.text();
+
+            // Add the response to the messages state with a label
+            setMessages([...messages, { text: markdown, isUser: false, label: 'Echo AI' }]);
+        } catch (error) {
+            console.error('Error fetching AI response:', error);
+        }
+
+        // Clear the input field
         setInputValue('');
-        // Send the message to Echo AI
+    };
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSendMessage();
+        }
     };
 
     return (
-        <div className="flex flex-col items-center justify-between h-full p-4 bg-gray-100">
-            <div className="flex flex-col items-center w-full space-y-2">
-                {messages.map((message, index) => (
-                    <div
-                        key={index}
-                        className={`rounded-lg p-2 ${message.isUser ? 'bg-blue-500 text-white self-end' : 'bg-gray-200 text-black self-start'
-                            }`}
-                    >
-                        {message.text}
+        <div className="flex gap-4 px-10 py-4 bg-gray-100">
+            <Sidebar />
+            <div className="flex flex-col px-24 py-8  bg-white rounded-lg shadow-md ">
+                <div className="flex flex-col grow">
+                    <div className="p-4">
+                        {messages.map((message, index) => (
+                            <div key={index} className="mb-4">
+                                {message.isUser ? (
+                                    <>
+                                        <div className='flex gap-4 items-center'>
+                                            <Circle className='size-5 fill-gray-200 text-gray-200' />
+                                            <h2 className="text-gray-400">You</h2>
+                                        </div>
+                                        <div className="rounded-lg pl-10">
+                                            <ReactMarkdown>{message.text}</ReactMarkdown>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className='flex gap-4 items-center'>
+                                            <Circle className='size-5 fill-gray-200 text-gray-200' />
+                                            <h2 className="text-gray-400">Echo AI</h2>
+                                        </div>
+                                        <div className="rounded-lg pl-10">
+                                            <ReactMarkdown>{message.text}</ReactMarkdown>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <div className="flex items-center justify-between w-full mt-4">
-                <input
+                </div>
+                <Input
                     type="text"
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type your message..."
-                    className="flex-grow px-3 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress} // Call handleKeyPress on key press
+                    placeholder="Message Echo"
+                    className="rounded-md"
                 />
-                <button
-                    onClick={handleSendMessage}
-                    className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-full"
-                >
-                    {/* <ChatIcon className="w-6 h-6" /> */}
-                </button>
             </div>
         </div>
     );
