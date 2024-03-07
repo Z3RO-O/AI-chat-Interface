@@ -1,5 +1,5 @@
 'use client'
-import ChatUI from "./ChatUI"
+import ChatUI from "./Chat/ChatUI"
 import Library from "./Library"
 
 const Parent = ({ activeItem }: any) => {

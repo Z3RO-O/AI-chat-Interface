@@ -4,8 +4,8 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 import { cn } from "@/lib/utils"
-import Sidebar from "@/components/Sidebar";
-import ChatUI from "@/components/ChatUI";
+import Sidebar from "@/components/Chat/Sidebar";
+import ChatUI from "@/components/Chat/ChatUI";
 
 const fontSans = FontSans({
   subsets: ["latin"],

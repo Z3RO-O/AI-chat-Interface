@@ -179,7 +179,7 @@ export default function Library() {
     })
 
     return (
-        <Card className="mx-10 my-6 grow ">
+        <Card className="mx-10 my-6 grow px-8">
             <div className="flex items-center justify-between">
                 <p className="p-8 text-lg font-semibold">Library</p>
                 <div className="flex relative justify-end py-4">
@@ -239,7 +239,7 @@ export default function Library() {
                     </DropdownMenuContent>
                 </DropdownMenu> */}
             </div>
-            <div className="rounded-md border-b p-8">
+            <div className="rounded-md h-[68vh] overflow-auto scrollbar-hide grow">
                 <Table>
                     <TableHeader className="text-xs">
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -259,7 +259,7 @@ export default function Library() {
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow

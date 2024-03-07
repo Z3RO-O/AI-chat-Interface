@@ -21,7 +21,7 @@ const Converstion: React.FC<Props> = ({ conversations }) => {
 
     return (
         <div className="flex flex-col">
-            <div className="relative w-full">
+            <div className="relative w-full mb-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
@@ -38,7 +38,7 @@ const Converstion: React.FC<Props> = ({ conversations }) => {
                 </svg>
                 <Input type="text" placeholder="Search conversations" className="pl-12 pr-4 bg-neutral-100" />
             </div>
-            <div className="overflow-hidden scrollbar-hide">
+            <div className="h-[65vh] overflow-auto scrollbar-hide">
                 {conversations.map((conversation, index) => (
                     <div
                         key={index}

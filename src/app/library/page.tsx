@@ -1,5 +1,5 @@
 import Library from "@/components/Library"
-import Sidebar from "@/components/Sidebar"
+import Sidebar from "@/components/Chat/Sidebar"
 // import { Combobox } from "@/components/WorkspaceSelector"
 import { Input } from "@/components/ui/input"
 

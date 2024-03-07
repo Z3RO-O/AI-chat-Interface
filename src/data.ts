@@ -1,5 +1,6 @@
 export const workspace = [
     {
+        id: "1",
         value: "Revenue Growth Management",
         label: "Revenue Growth Management",
         lastUpdate: "Updated 3 days ago",
@@ -80,3 +81,19 @@ export const sections = [
     },
    
 ]
+export const response = {
+    ok: true, // Simulating a successful response
+    text: async () => {
+        // Simulating a markdown response from the AI
+        return (`
+            # AI Response
+
+            ## Hello, how can I assist you today?
+
+            Here are some suggestions:
+
+            - Check out our latest products.
+            - Learn more about our services.
+            - Contact our support team for assistance.`);
+    }
+};
