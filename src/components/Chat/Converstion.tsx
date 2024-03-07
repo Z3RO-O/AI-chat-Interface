@@ -38,7 +38,7 @@ const Converstion: React.FC<Props> = ({ conversations }) => {
                 </svg>
                 <Input type="text" placeholder="Search conversations" className="pl-12 pr-4 bg-neutral-100" />
             </div>
-            <div className="h-[65vh] overflow-auto scrollbar-hide">
+            <div className="h-[60vh] overflow-auto scrollbar-hide">
                 {conversations.map((conversation, index) => (
                     <div
                         key={index}

@@ -1,9 +1,24 @@
 export const workspace = [
     {
         id: "1",
+        initials: "RG",
         value: "Revenue Growth Management",
-        label: "Revenue Growth Management",
+        numberOfDocuments: 3,
         lastUpdate: "Updated 3 days ago",
+    },
+    {
+        id: "2",
+        initials: "GM",
+        value: "Growth Management",
+        numberOfDocuments: 4,
+        lastUpdate: "Updated 5 days ago",
+    },
+    {
+        id: "3",
+        initials: "TM",
+        value: "Tax Management",
+        numberOfDocuments: 7,
+        lastUpdate: "Updated 6 days ago",
     },
 ]
 

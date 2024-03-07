@@ -239,7 +239,7 @@ export default function Library() {
                     </DropdownMenuContent>
                 </DropdownMenu> */}
             </div>
-            <div className="rounded-md h-[68vh] overflow-auto scrollbar-hide grow">
+            <div className="rounded-md h-[60vh] overflow-auto scrollbar-hide grow">
                 <Table>
                     <TableHeader className="text-xs">
                         {table.getHeaderGroups().map((headerGroup) => (

@@ -7,10 +7,10 @@ import WorkspaceSelector from './WorkspaceSelector'
 import Converstion from './Converstion'
 import { converstions } from "@/data"
 
-const Sidebar = () => {
+const Sidebar = ({ setId }: any) => {
     return (
         <Card className=" max-w-[350px] border-r bg-white">
-            <div className="p-4"><WorkspaceSelector /></div>
+            <div className="p-4"><WorkspaceSelector setId={setId} /></div>
             <Separator />
             <div className="flex-grow p-4">
                 <Converstion conversations={converstions} />

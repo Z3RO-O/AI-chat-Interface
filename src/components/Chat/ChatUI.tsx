@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Input } from "@/components/ui/input";
 import Sidebar from './Sidebar';
-import { Circle, LucideRefreshCw, LucideSparkles, Pencil, Sparkle } from 'lucide-react';
-import { response } from '@/data';
+import { Circle, Dot, LucideRefreshCw, LucideSparkles, Pencil, Sparkle } from 'lucide-react';
+import { response, workspace } from '@/data';
 import { Card } from '../ui/card';
 
 type Message = {
@@ -12,9 +12,18 @@ type Message = {
     label: string;
 };
 
+type WorkspaceItem = {
+    id: string;
+    initials: string;
+    value: string;
+    lastUpdate: string;
+    numberOfDocuments: number;
+};
+
 const ChatUI: React.FC = () => {
+    const [id, setId] = useState('1');
     const [messages, setMessages] = useState<Message[]>([]);
-    const [inputValue, setInputValue] = useState<string>(''); // Set initial value to empty string
+    const [inputValue, setInputValue] = useState<string>('');
     const [suggestions, setSuggestions] = useState<string[]>([
         "Check account balance",
         "Make a payment",
@@ -23,11 +32,22 @@ const ChatUI: React.FC = () => {
     ]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
+    const [workspaceItem, setWorkspaceItem] = useState(workspace[0]);
+
+    useEffect(() => {
+        if (id) {
+            const foundWorkspaceItem = workspace.find(item => item.id === id);
+            if (foundWorkspaceItem) {
+                setWorkspaceItem(foundWorkspaceItem);
+            }
+        }
+    }, [id]);
+
     const handleSendMessage = async (message: string) => {
         const newUserMessage: Message = { text: message, isUser: true, label: 'You' };
-        setMessages(prevMessages => [...prevMessages, newUserMessage]); // Update messages with previous state
-        setInputValue(''); // Clear input value
-        setSuggestions([]); // Clear suggestions
+        setMessages(prevMessages => [...prevMessages, newUserMessage]);
+        setInputValue('');
+        setSuggestions([]);
 
         try {
             if (!response.ok) {
@@ -60,29 +80,36 @@ const ChatUI: React.FC = () => {
     }, [messages]);
 
     return (
-        <div className="w-full grow items-center justify-center bg-gray-100 my-4 mx-10">
-            <div className='flex h-full gap-4'>
-                <Sidebar />
+        <div className="w-full grow items-center justify-center bg-gray-100 my-6 mx-10">
+            <div className='flex gap-4 h-[85vh]'>
+                <Sidebar setId={setId} />
                 <div className="flex flex-col grow lg:px-24 md:px-6 py-8 bg-white rounded-lg">
-                    <div className="flex-grow h-[45vh] overflow-y-auto relative scrollbar-hide text-sm pb-4">
-                        <div className="p-4">
-                            {messages.map((message, index) => (
-                                <div key={index} className="mb-4">
-                                    <div className='flex gap-4 items-center'>
-                                        <Circle className='size-5 fill-gray-200 text-gray-200' />
-                                        <h2 className="text-gray-400">{message.label}</h2>
-                                    </div>
-                                    <div className="rounded-lg pl-10">
-                                        {message.isUser ? (
-                                            <p>{message.text}</p>
-                                        ) : (
-                                            <ReactMarkdown>{message.text}</ReactMarkdown>
-                                        )}
-                                    </div>
+                    <div className="flex-grow h-[40vh] overflow-y-auto relative scrollbar-hide text-sm pb-4">
+                        {messages.length === 0 && (
+                            <div className="flex items-center justify-center h-full">
+                                <div className="flex flex-col items-center justify-center">
+                                    <div className="text-gray-500 p-8 text-lg font-semibold bg-slate-100 rounded-lg">{workspaceItem.initials}</div>
+                                    <div className='font-semibold pt-5'>{workspaceItem.value}</div>
+                                    <div className='flex items-center text-xs text-gray-400'>{workspaceItem.numberOfDocuments} {workspaceItem.numberOfDocuments == 1 ? ' document' : 'documents'}<Dot />{workspaceItem.lastUpdate}</div>
                                 </div>
-                            ))}
-                            <div ref={messagesEndRef} />
-                        </div>
+                            </div>
+                        )}
+                        {messages.map((message, index) => (
+                            <div key={index} className="mb-4">
+                                <div className='flex gap-4 items-center'>
+                                    <Circle className='size-5 fill-gray-200 text-gray-200' />
+                                    <h2 className="text-gray-400">{message.label}</h2>
+                                </div>
+                                <div className="rounded-lg pl-10">
+                                    {message.isUser ? (
+                                        <p>{message.text}</p>
+                                    ) : (
+                                        <ReactMarkdown>{message.text}</ReactMarkdown>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef} />
                     </div>
                     {suggestions.length > 0 && (
                         <Card className="grid grid-cols-2 gap-2 p-4 mb-4 justify-between">
