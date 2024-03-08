@@ -1,4 +1,3 @@
-"use client"
 import { Separator } from "@/components/ui/separator"
 import {
     Card
@@ -7,10 +6,10 @@ import WorkspaceSelector from './WorkspaceSelector'
 import Converstion from './Converstion'
 import { converstions } from "@/data"
 
-const Sidebar = ({ setId }: any) => {
+const Sidebar = () => {
     return (
-        <Card className=" max-w-[350px] border-r bg-white">
-            <div className="p-4"><WorkspaceSelector setId={setId} /></div>
+        <Card className=" max-w-[350px] h-[80vh] border-r bg-white">
+            <div className="p-4"><WorkspaceSelector /></div>
             <Separator />
             <div className="flex-grow p-4">
                 <Converstion conversations={converstions} />

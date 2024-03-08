@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Input } from "@/components/ui/input";
 import Sidebar from './Sidebar';
-import { Circle, Dot, LucideRefreshCw, LucideSparkles, Pencil, Sparkle } from 'lucide-react';
+import { Circle, Dot, LucideRefreshCw, LucideSparkles, Pencil } from 'lucide-react';
 import { response, workspace } from '@/data';
 import { Card } from '../ui/card';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { addMessage } from '@/redux/features/chatSlice';
 
 type Message = {
     text: string;
@@ -12,17 +15,10 @@ type Message = {
     label: string;
 };
 
-type WorkspaceItem = {
-    id: string;
-    initials: string;
-    value: string;
-    lastUpdate: string;
-    numberOfDocuments: number;
-};
-
 const ChatUI: React.FC = () => {
-    const [id, setId] = useState('1');
-    const [messages, setMessages] = useState<Message[]>([]);
+    const selectedWorkspaceId = useSelector((state: RootState) => state.sidebar.selectedWorkspaceId);
+    const dispatch = useDispatch();
+    const messages = useSelector((state: RootState) => state.chat.messages);
     const [inputValue, setInputValue] = useState<string>('');
     const [suggestions, setSuggestions] = useState<string[]>([
         "Check account balance",
@@ -30,33 +26,29 @@ const ChatUI: React.FC = () => {
         "Change password",
         "Update personal information"
     ]);
+
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const [workspaceItem, setWorkspaceItem] = useState(workspace[0]);
 
     useEffect(() => {
-        if (id) {
-            const foundWorkspaceItem = workspace.find(item => item.id === id);
+        if (selectedWorkspaceId) {
+            const foundWorkspaceItem = workspace.find(item => item.id === selectedWorkspaceId);
             if (foundWorkspaceItem) {
                 setWorkspaceItem(foundWorkspaceItem);
             }
         }
-    }, [id]);
+    }, [selectedWorkspaceId]);
 
     const handleSendMessage = async (message: string) => {
         const newUserMessage: Message = { text: message, isUser: true, label: 'You' };
-        setMessages(prevMessages => [...prevMessages, newUserMessage]);
+        dispatch(addMessage(newUserMessage));
         setInputValue('');
         setSuggestions([]);
 
         try {
-            if (!response.ok) {
-                throw new Error('Failed to fetch AI response');
-            }
-
-            const markdown = await response.text();
-            const newAiMessage: Message = { text: markdown, isUser: false, label: 'Echo AI' };
-            setMessages(prevMessages => [...prevMessages, newAiMessage]); // Update messages with previous state
+            const newAiMessage: Message = { text: response, isUser: false, label: 'Echo AI' };
+            dispatch(addMessage(newAiMessage));
         } catch (error) {
             console.error('Error fetching AI response:', error);
         }
@@ -81,8 +73,8 @@ const ChatUI: React.FC = () => {
 
     return (
         <div className="w-full grow items-center justify-center bg-gray-100 my-6 mx-10">
-            <div className='flex gap-4 h-[85vh]'>
-                <Sidebar setId={setId} />
+            <div className='flex gap-4 h-[80vh]'>
+                <Sidebar />
                 <div className="flex flex-col grow lg:px-24 md:px-6 py-8 bg-white rounded-lg">
                     <div className="flex-grow h-[40vh] overflow-y-auto relative scrollbar-hide text-sm pb-4">
                         {messages.length === 0 && (
@@ -104,6 +96,7 @@ const ChatUI: React.FC = () => {
                                     {message.isUser ? (
                                         <p>{message.text}</p>
                                     ) : (
+                                        // <ReactMarkdown># Heading 1</ReactMarkdown>
                                         <ReactMarkdown>{message.text}</ReactMarkdown>
                                     )}
                                 </div>

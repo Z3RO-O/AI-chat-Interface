@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import {
     ColumnDef,
@@ -14,12 +12,11 @@ import {
     useReactTable,
 } from "@tanstack/react-table"
 import { Card } from "@/components/ui/card"
-import { ChevronDown, MoreHorizontal, Square, Zap } from "lucide-react"
+import { MoreHorizontal, Square, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
@@ -59,7 +56,7 @@ export const columns: ColumnDef<tableData>[] = [
                     table.getIsAllPageRowsSelected() ||
                     (table.getIsSomePageRowsSelected() && "indeterminate")
                 }
-                onCheckedChange={(value: any) => table.toggleAllPageRowsSelected(!!value)}
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
             />
         ),
@@ -239,7 +236,7 @@ export default function Library() {
                     </DropdownMenuContent>
                 </DropdownMenu> */}
             </div>
-            <div className="rounded-md h-[60vh] overflow-auto scrollbar-hide grow">
+            <div className="rounded-md h-[65vh] overflow-auto scrollbar-hide grow">
                 <Table>
                     <TableHeader className="text-xs">
                         {table.getHeaderGroups().map((headerGroup) => (

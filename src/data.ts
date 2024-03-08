@@ -96,19 +96,48 @@ export const sections = [
     },
    
 ]
-export const response = {
-    ok: true, // Simulating a successful response
-    text: async () => {
-        // Simulating a markdown response from the AI
-        return (`
-            # AI Response
 
-            ## Hello, how can I assist you today?
+export const response =`
+# Markdown Cheat Sheet
 
-            Here are some suggestions:
+Welcome to the Markdown Cheat Sheet! Here's a quick reference for all the Markdown syntax you'll need.
+---
+## Headings
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
 
-            - Check out our latest products.
-            - Learn more about our services.
-            - Contact our support team for assistance.`);
-    }
-};
+## Emphasis
+*italic text*
+**bold text**
+~~strikethrough text~~
+
+## Lists
+Unordered List:
+- Item 1
+- Item 2
+  - Nested Item 1
+  - Nested Item 2
+
+Ordered List:
+1. Item 1
+2. Item 2
+   1. Nested Item 1
+   2. Nested Item 2
+
+## Blockquotes
+> This is a blockquote.
+
+## Code
+Inline code: \`console.log("Hello, World!")\`
+
+Code block:
+\`\`\`javascript
+
+console.log("Hello, World!");
+
+\`\`\`
+`;

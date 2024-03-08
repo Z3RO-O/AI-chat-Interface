@@ -1,18 +1,24 @@
-'use client'
-import { useState } from 'react';
 import UserDetails from './User';
-import { User } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { setActiveItem, setMobileMenuOpen } from '@/redux/features/navbarSlice';
 
 const navigation = [
     { name: 'Chat' },
     { name: 'Library' },
 ];
 
-export default function Navbar({ activeItem, setActiveItem }: any) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function Navbar() {
+    const dispatch = useDispatch();
+    const activeItem = useSelector((state: RootState) => state.navbar.activeItem);
+    const mobileMenuOpen = useSelector((state: RootState) => state.navbar.mobileMenuOpen);
 
-    const handleItemClick = (name: any) => {
-        setActiveItem(name);
+    const handleItemClick = (name: string) => {
+        dispatch(setActiveItem(name));
+    };
+
+    const handleMobileMenuClick = (isOpen: boolean) => {
+        dispatch(setMobileMenuOpen(isOpen));
     };
 
     return (
@@ -28,7 +34,7 @@ export default function Navbar({ activeItem, setActiveItem }: any) {
                         <button
                             type="button"
                             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                            onClick={() => setMobileMenuOpen(true)}
+                            onClick={() => handleMobileMenuClick(!mobileMenuOpen)}
                         >
                             <span className="sr-only">Open main menu</span>
                             <svg
